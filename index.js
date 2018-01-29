@@ -3,6 +3,10 @@
 
 var util = require('util');
 var extend = util._extend;
+var path = require('path');
+var Funnel = require('broccoli-funnel');
+var mergeTrees = require('broccoli-merge-trees');
+var map = require('broccoli-stew').map;
 
 var defaultOptions = {
   importBootstrapSliderCSS: true,
