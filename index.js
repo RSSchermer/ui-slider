@@ -24,5 +24,21 @@ module.exports = {
     if (options.importAddonCss) {
       parentApp.import('vendor/ui-slider/ui-slider.css');
     }
+  },
+
+  treeForVendor(vendorTree) {
+    var dir = path.dirname(require.resolve('ui-slider'));
+    var sliderJsTree = new Funnel(dir, {
+      files: ['bootstrap-slider.js']
+    });
+    var sliderCssTree = new Funnel(dir, {
+      files: ['bootstrap-slider.css', 'ui-slider.css']
+    });
+
+    sliderJsTree = map(sliderJsTree, (content) => `if (typeof FastBoot === 'undefined') { ${content} }`);
+
+    var sliderTree = mergeTrees([sliderJsTree, sliderCssTree]);
+
+    return vendorTree ? mergeTrees([vendorTree, sliderTree]) : sliderTree;
   }
 };
