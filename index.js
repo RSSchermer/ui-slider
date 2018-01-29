@@ -25,7 +25,7 @@ module.exports = {
       parentApp.import('vendor/bootstrap-slider.css');
     }
     if (options.importAddonCss) {
-      parentApp.import('vendor/ui-slider.css');
+      parentApp.import('vendor/ui-slider/ui-slider.css');
     }
   },
 
@@ -36,14 +36,11 @@ module.exports = {
     var bootstrapSliderCssTree = new Funnel('bower_components/seiyria-bootstrap-slider/dist/css', {
       files: ['bootstrap-slider.css', 'vendor/ui-slider/ui-slider.css']
     });
-    var addonCssTree = new Funnel('vendor/ui-slider', {
-      files: ['ui-slider.css']
-    });
 
     bootstrapSliderJsTree = map(bootstrapSliderJsTree, (content) => `if (typeof FastBoot === 'undefined') { ${content} }`);
 
-    var sliderTree = mergeTrees([bootstrapSliderJsTree, bootstrapSliderCssTree, addonCssTree]);
+    var bootstrapSliderTree = mergeTrees([bootstrapSliderJsTree, bootstrapSliderCssTree]);
 
-    return vendorTree ? mergeTrees([vendorTree, sliderTree]) : sliderTree;
+    return vendorTree ? mergeTrees([vendorTree, bootstrapSliderTree]) : bootstrapSliderTree;
   }
 };
