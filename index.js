@@ -34,7 +34,7 @@ module.exports = {
       files: ['bootstrap-slider.js']
     });
     var bootstrapSliderCssTree = new Funnel('bower_components/seiyria-bootstrap-slider/dist/css', {
-      files: ['bootstrap-slider.css', 'vendor/ui-slider/ui-slider.css']
+      files: ['bootstrap-slider.css']
     });
 
     bootstrapSliderJsTree = map(bootstrapSliderJsTree, (content) => `if (typeof FastBoot === 'undefined') { ${content} }`);
