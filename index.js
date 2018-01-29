@@ -3,7 +3,6 @@
 
 var util = require('util');
 var extend = util._extend;
-var path = require('path');
 var Funnel = require('broccoli-funnel');
 var mergeTrees = require('broccoli-merge-trees');
 var map = require('broccoli-stew').map;
@@ -31,17 +30,19 @@ module.exports = {
   },
 
   treeForVendor(vendorTree) {
-    var dir = path.dirname(require.resolve('ui-slider'));
-    var sliderJsTree = new Funnel(dir, {
+    var bootstrapSliderJsTree = new Funnel('bower_components/seiyria-bootstrap-slider/dist', {
       files: ['bootstrap-slider.js']
     });
-    var sliderCssTree = new Funnel(dir, {
-      files: ['bootstrap-slider.css', 'ui-slider.css']
+    var bootstrapSliderCssTree = new Funnel('bower_components/seiyria-bootstrap-slider/dist/css', {
+      files: ['bootstrap-slider.css', 'vendor/ui-slider/ui-slider.css']
+    });
+    var addonCssTree = new Funnel('vendor/ui-slider', {
+      files: ['ui-slider.css']
     });
 
     sliderJsTree = map(sliderJsTree, (content) => `if (typeof FastBoot === 'undefined') { ${content} }`);
 
-    var sliderTree = mergeTrees([sliderJsTree, sliderCssTree]);
+    var sliderTree = mergeTrees([sliderJsTree, sliderCssTree, addonCssTree]);
 
     return vendorTree ? mergeTrees([vendorTree, sliderTree]) : sliderTree;
   }
