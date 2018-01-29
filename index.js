@@ -40,9 +40,9 @@ module.exports = {
       files: ['ui-slider.css']
     });
 
-    sliderJsTree = map(sliderJsTree, (content) => `if (typeof FastBoot === 'undefined') { ${content} }`);
+    bootstrapSliderJsTree = map(bootstrapSliderJsTree, (content) => `if (typeof FastBoot === 'undefined') { ${content} }`);
 
-    var sliderTree = mergeTrees([sliderJsTree, sliderCssTree, addonCssTree]);
+    var sliderTree = mergeTrees([bootstrapSliderJsTree, bootstrapSliderCssTree, addonCssTree]);
 
     return vendorTree ? mergeTrees([vendorTree, sliderTree]) : sliderTree;
   }
